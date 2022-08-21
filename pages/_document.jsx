@@ -11,6 +11,18 @@ class MyDocument extends Document {
             as="font"
             crossOrigin="anonymous"
           />
+          <link
+            rel="preload"
+            href="/fonts/RobotoSlab-SemiBold.ttf"
+            as="font"
+            crossOrigin="anonymous"
+          />
+          <link
+            rel="preload"
+            href="/fonts/RobotoSlab-Bold.ttf"
+            as="font"
+            crossOrigin="anonymous"
+          />
         </Head>
         <body>
           <Main />
