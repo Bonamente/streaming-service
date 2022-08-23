@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
+import Navbar from '../components/navbar/Navbar';
 import Banner from '../components/banner/Banner';
 
 const Home = () => (
@@ -11,7 +12,7 @@ const Home = () => (
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-    <h1>Paradiso</h1>
+    <Navbar username="bob@gmail.com" />
 
     <Banner
       title="Batman"
