@@ -17,14 +17,16 @@ const Navbar = ({ username }) => {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <Link className={styles.logoLink} href="/">
-          <div className={styles.logoWrapper}>
-            <Image
-              src="/static/logo.png"
-              width="140px"
-              height="40px"
-              alt="Logo"
-            />
-          </div>
+          <a>
+            <div className={styles.logoWrapper}>
+              <Image
+                src="/static/logo.png"
+                width="140px"
+                height="40px"
+                alt="Logo"
+              />
+            </div>
+          </a>
         </Link>
 
         <ul className={styles.navItems}>
