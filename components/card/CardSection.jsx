@@ -2,7 +2,7 @@
 import Card from './Card';
 import styles from './CardSection.module.css';
 
-const CardSection = ({ title, videos, size }) => (
+const CardSection = ({ title, videos = [], size }) => (
   <section className={styles.container}>
     <h2 className={styles.title}>{title}</h2>
 
