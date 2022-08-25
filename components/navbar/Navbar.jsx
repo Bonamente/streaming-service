@@ -1,16 +1,50 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 
 import styles from './Navbar.module.css';
+import magic from '../../lib/magic-client';
 
-const Navbar = ({ username }) => {
+const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [username, setUsername] = useState('');
+
+  const router = useRouter();
+
+  useEffect(() => {
+    async function getUsername() {
+      try {
+        const { email } = await magic.user.getMetadata();
+        if (email) {
+          setUsername(email);
+        }
+      } catch (err) {
+        console.log('Error retrieving email:', err);
+      }
+    }
+
+    getUsername();
+  }, []);
 
   const handleShowDropdown = (e) => {
     e.preventDefault();
     setShowDropdown(!showDropdown);
+  };
+
+  const handleSignout = async (e) => {
+    e.preventDefault();
+
+    try {
+      await magic.user.logout();
+      router.push('/login');
+    } catch (err) {
+      console.error('Error logging out', err);
+      router.push('/login');
+    }
   };
 
   return (
@@ -57,9 +91,10 @@ const Navbar = ({ username }) => {
             {showDropdown && (
               <div className={styles.authDropdown}>
                 <div>
-                  <Link href="/login">
-                    <a className={styles.authLink}>Sign out</a>
-                  </Link>
+                  <a className={styles.authLink} onClick={handleSignout}>
+                    Sign out
+                  </a>
+
                   <div className={styles.lineWrapper} />
                 </div>
               </div>
