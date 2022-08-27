@@ -1,9 +1,10 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
 
 import Navbar from '../components/navbar/Navbar';
 import Banner from '../components/banner/Banner';
 import CardSection from '../components/card/CardSection';
+
+import styles from '../styles/Home.module.css';
 
 import { getVideos, getPopularVideos } from '../lib/videos';
 
@@ -14,6 +15,10 @@ export async function getServerSideProps() {
   const productivityVideos = await getVideos('productivity');
   const popularVideos = await getPopularVideos();
 
+  // const disneyVideos = [];
+  // const travelVideos = [];
+  // const productivityVideos = [];
+  // const popularVideos = [];
   return {
     props: { disneyVideos, travelVideos, productivityVideos, popularVideos },
   };
@@ -33,9 +38,10 @@ const Home = ({
     </Head>
 
     <div className={styles.main}>
-      <Navbar username="bob@gmail.com" />
+      <Navbar />
 
       <Banner
+        videoId="TQfATDZY5Y4"
         title="Batman"
         subTitle="The Dark Knight"
         imgUrl="/static/banner.jpg"

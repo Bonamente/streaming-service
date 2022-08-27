@@ -1,4 +1,6 @@
 /* eslint-disable react/no-array-index-key */
+import Link from 'next/link';
+
 import Card from './Card';
 import styles from './CardSection.module.css';
 
@@ -8,7 +10,9 @@ const CardSection = ({ title, videos = [], size }) => (
 
     <div className={styles.cardWrapper}>
       {videos.map((video, idx) => (
-        <Card key={idx} id={idx} imgUrl={video.imgUrl} size={size} />
+        <Link key={video.id} href={`/video/${video.id}`}>
+          <Card key={idx} id={idx} imgUrl={video.imgUrl} size={size} />
+        </Link>
       ))}
     </div>
   </section>
