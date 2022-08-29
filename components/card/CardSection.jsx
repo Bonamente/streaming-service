@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/no-array-index-key */
 import Link from 'next/link';
 
@@ -11,7 +12,9 @@ const CardSection = ({ title, videos = [], size }) => (
     <div className={styles.cardWrapper}>
       {videos.map((video, idx) => (
         <Link key={video.id} href={`/video/${video.id}`}>
-          <Card key={idx} id={idx} imgUrl={video.imgUrl} size={size} />
+          <a>
+            <Card key={idx} id={idx} imgUrl={video.imgUrl} size={size} />
+          </a>
         </Link>
       ))}
     </div>
