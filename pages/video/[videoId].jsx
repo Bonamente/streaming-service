@@ -1,28 +1,49 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 import { useRouter } from 'next/router';
 import Modal from 'react-modal';
-
 import cn from 'classnames';
+
+import Navbar from '../../components/navbar/Navbar';
 import styles from '../../styles/Video.module.css';
+import { getYoutubeVideoById } from '../../lib/videos';
 
 Modal.setAppElement('#__next');
 
-const Video = () => {
+export async function getStaticProps(context) {
+  const { videoId } = context.params;
+
+  const videos = await getYoutubeVideoById(videoId);
+
+  return {
+    props: {
+      video: videos.length > 0 ? videos[0] : {},
+    },
+    revalidate: 10,
+  };
+}
+
+export async function getStaticPaths() {
+  const listOfVideos = ['Qz3u06eXf0E', 'TQfATDZY5Y4', '_Gr2zXuEBL0'];
+  const paths = listOfVideos.map((videoId) => ({ params: { videoId } }));
+
+  return { paths, fallback: 'blocking' };
+}
+
+const Video = ({ video }) => {
   const router = useRouter();
 
-  const video = {
-    title:
-      'The Night Is Darkest Right Before The Dawn. And I Promise You, The Dawn Is Coming.',
-    publishTime: '2008-18-07',
-    description: 'Batman tries to hang on as best he can',
-    channelTitle: 'Warner Bros. Pictures',
-    viewCount: 100000,
-  };
-
-  const { title, publishTime, description, channelTitle, viewCount } = video;
+  const {
+    title,
+    publishTime,
+    description,
+    channelTitle,
+    statistics: { viewCount } = { viewCount: 0 },
+  } = video;
 
   return (
     <div className={styles.container}>
+      <Navbar />
+
       <Modal
         isOpen
         contentLabel="Watch the video"

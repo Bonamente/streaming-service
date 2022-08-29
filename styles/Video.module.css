@@ -1,6 +1,6 @@
 .modal {
   position: absolute;  
-  top: 5%;
+  top: 10%;
   right: 0;
   bottom: 40px;
   left: 0;
@@ -53,8 +53,8 @@
 }
 
 .col1 {
-  max-height: 23rem /* 208px */;
-
+  max-height: 40vh;
+  
   overflow-y: scroll;
 }
 
