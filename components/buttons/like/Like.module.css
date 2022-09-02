@@ -1,0 +1,10 @@
+.likeBtn {
+  display: flex;
+  justify-content: center;
+
+  padding: 0.5rem /* 8px */;
+  
+  background-color: var(--gray40);
+  border: 2px solid var(--white10);
+  border-radius: 50%;
+}
