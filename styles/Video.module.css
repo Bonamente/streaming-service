@@ -113,3 +113,17 @@
     width: 100%;
   }
 }
+
+.buttonsWrapper {
+  position: absolute;
+  top: 35%;
+
+  display: flex;
+
+  margin-bottom: 0.75rem /* 12px */;
+  padding-left: 1rem /* 48px */;
+}
+
+.likeBtnWrapper {
+  margin-right: 0.5rem /* 8px */;
+}
