@@ -16,6 +16,7 @@ const Card = ({
   imgUrl = '/static/fallback-card-image.jpg',
   size = 'medium',
   id,
+  shouldScale = true,
 }) => {
   const [imgSrc, setImgSrc] = useState(imgUrl);
 
@@ -23,14 +24,17 @@ const Card = ({
     setImgSrc('/static/fallback-card-image.jpg');
   };
 
-  // Todo refactor
   const scale = id === 0 ? { scaleY: 1.1 } : { scale: 1.1 };
+
+  const shouldHover = shouldScale && {
+    whileHover: { ...scale },
+  };
 
   return (
     <div className={styles.container}>
       <motion.div
         className={cn(styles.imgMotionWrapper, classMap[size])}
-        whileHover={{ ...scale }}
+        {...shouldHover}
       >
         <Image
           className={styles.cardImg}
