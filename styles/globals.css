@@ -22,6 +22,7 @@
 
   --red: rgb(220, 38, 38);
   --red10: rgba(185, 28, 28, 1);
+  --red20: rgba(255, 0, 54, 1);
 
   --blue: rgba(75, 85, 99, 1);
   --blue20: rgb(55, 65, 81);
@@ -66,12 +67,19 @@ body {
   src: url(/fonts/RobotoSlab-Bold.ttf) format("truetype");
 }
 
+@font-face {
+  font-family: "Roboto Slab";
+  font-style: normal;
+  font-weight: 800;
+  src: url(/fonts/RobotoSlab-ExtraBold.ttf) format("truetype");
+}
 
 a {
   color: inherit;
+  font-family: inherit;
+  font-weight: 600;
+  
   text-decoration: none;
-
-  outline: 0;
 }
 
 * {
@@ -116,8 +124,7 @@ button {
 
   background-image: none;
   background-color: transparent;
-  border: 0;
-  outline: 0;
+  border: 0;  
 
   cursor: pointer;
 }
