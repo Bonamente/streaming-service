@@ -39,13 +39,19 @@ const MyList = ({ myListVideos }) => (
 
     <main className={styles.main}>
       <div className={styles.sectionWrapper}>
-        <CardSection
-          title="My List"
-          videos={myListVideos}
-          size="small"
-          shouldWrap
-          shouldScale={false}
-        />
+        {myListVideos.length > 0 ? (
+          <CardSection
+            title="My List"
+            videos={myListVideos}
+            size="small"
+            shouldWrap
+            shouldScaleXYFirstCard
+          />
+        ) : (
+          <h2 className={styles.fallbackTitle}>
+            Your favorite videos will be displayed here
+          </h2>
+        )}
       </div>
     </main>
   </>

@@ -4,6 +4,17 @@
 }
 
 .sectionWrapper {
+  max-width: 1600px;
+  margin: 0 auto;
   margin-top: 1.5rem /* 24px */;
   margin-bottom: 1.5rem /* 24px */;
+}
+
+.fallbackTitle {
+  display: block;
+  width: 350px;
+  margin: 0 auto;
+  margin-top: 300px;
+
+  text-align: center;
 }
