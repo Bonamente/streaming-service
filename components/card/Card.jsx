@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-import { motion } from 'framer-motion';
-import cn from 'classnames';
-
 import styles from './Card.module.css';
 
 const classMap = {
@@ -15,27 +12,18 @@ const classMap = {
 const Card = ({
   imgUrl = '/static/fallback-card-image.jpg',
   size = 'medium',
-  id,
-  shouldScale = true,
 }) => {
   const [imgSrc, setImgSrc] = useState(imgUrl);
 
   const handleOnError = () => {
-    setImgSrc('/static/fallback-card-image.jpg');
-  };
-
-  const scale = id === 0 ? { scaleY: 1.1 } : { scale: 1.1 };
-
-  const shouldHover = shouldScale && {
-    whileHover: { ...scale },
+    // Consider better solution later
+    setImgSrc(`${imgUrl.slice(0, -17)}hqdefault.jpg`);
+    // setImgSrc('/static/fallback-card-image.jpg');
   };
 
   return (
     <div className={styles.container}>
-      <motion.div
-        className={cn(styles.imgMotionWrapper, classMap[size])}
-        {...shouldHover}
-      >
+      <div className={classMap[size]}>
         <Image
           className={styles.cardImg}
           src={imgSrc}
@@ -43,7 +31,7 @@ const Card = ({
           onError={handleOnError}
           alt="image"
         />
-      </motion.div>
+      </div>
     </div>
   );
 };

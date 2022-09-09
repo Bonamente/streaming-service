@@ -4,16 +4,6 @@
   cursor: pointer;
 }
 
-.imgMotionWrapper {
-  position: relative;
-
-  display: inline-block;
-}
-
-.imgMotionWrapper:hover {
-  z-index: 100;
-}
-
 .lgItem {
   position: relative;
 
