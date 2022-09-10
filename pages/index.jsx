@@ -3,32 +3,60 @@ import Head from 'next/head';
 import Navbar from '../components/navbar/Navbar';
 import Banner from '../components/banner/Banner';
 import CardSection from '../components/card/CardSection';
-
 import styles from '../styles/Home.module.css';
 
-import { getVideos, getPopularVideos } from '../lib/videos';
+import {
+  getVideos,
+  getPopularVideos,
+  getWatchItAgainVideos,
+} from '../lib/videos';
 
-export async function getServerSideProps() {
-  // TODO consider refactor
-  const disneyVideos = await getVideos('disney trailer');
-  const travelVideos = await getVideos('travel');
-  const productivityVideos = await getVideos('productivity');
-  const popularVideos = await getPopularVideos();
+import redirectUser from '../utils/redirectUser';
 
-  // const disneyVideos = [];
-  // const travelVideos = [];
-  // const productivityVideos = [];
-  // const popularVideos = [];
+export async function getServerSideProps(context) {
+  const { userId, token } = await redirectUser(context);
+
+  if (!userId) {
+    return {
+      props: {},
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  const [
+    newMovies,
+    travelVideos,
+    movieClassic,
+    popularVideos,
+    watchItAgainVideos,
+  ] = await Promise.all([
+    getVideos('new movie and tv series official trailer'),
+    getVideos('travel videos'),
+    getVideos('buster keaton charlie chaplin full movie hd'),
+    getPopularVideos(),
+    getWatchItAgainVideos(userId, token),
+  ]);
+
   return {
-    props: { disneyVideos, travelVideos, productivityVideos, popularVideos },
+    props: {
+      newMovies,
+      movieClassic,
+      travelVideos,
+      popularVideos,
+      watchItAgainVideos,
+    },
   };
 }
 
 const Home = ({
-  disneyVideos,
+  newMovies,
+  movieClassic,
   travelVideos,
-  productivityVideos,
   popularVideos,
+  watchItAgainVideos,
 }) => (
   <div className={styles.container}>
     <Head>
@@ -37,27 +65,41 @@ const Home = ({
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-    <div className={styles.main}>
-      <Navbar />
+    <Navbar />
 
+    <main className={styles.main}>
       <Banner
-        videoId="TQfATDZY5Y4"
-        title="Batman"
-        subTitle="The Dark Knight"
+        videoId="Qz3u06eXf0E"
+        title="Better Call Saul"
+        subTitle="S'all Good, Man"
         imgUrl="/static/banner.jpg"
       />
 
       <div className={styles.sectionWrapper}>
-        <CardSection title="Disney" videos={disneyVideos} size="large" />
-        <CardSection title="Travel" videos={travelVideos} size="small" />
         <CardSection
-          title="Productivity"
-          videos={productivityVideos}
+          title="New movie and TV series"
+          videos={newMovies}
+          size="large"
+        />
+
+        {watchItAgainVideos.length > 0 && (
+          <CardSection
+            title="Watch it again"
+            videos={watchItAgainVideos}
+            size="small"
+          />
+        )}
+
+        <CardSection
+          title="Movie Classic"
+          videos={movieClassic}
           size="medium"
         />
+
+        <CardSection title="Travel" videos={travelVideos} size="small" />
         <CardSection title="Popular" videos={popularVideos} size="small" />
       </div>
-    </div>
+    </main>
   </div>
 );
 

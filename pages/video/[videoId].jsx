@@ -118,7 +118,7 @@ const Video = ({ video }) => {
           id="ytplayer"
           type="text/html"
           width="100%"
-          height="360"
+          height="460"
           src={`https://www.youtube.com/embed/${videoId}?autoplay=0&origin=http://example.com&controls=0&rel=1`}
           frameBorder="0"
         />

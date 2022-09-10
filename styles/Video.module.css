@@ -1,12 +1,16 @@
+.container {
+  position: relative;  
+}
+
 .modal {
   position: absolute;  
-  top: 10%;
+  top: 11%;
   right: 0;
-  bottom: 40px;
+  bottom: 0;
   left: 0;
   
-
-  width: 800px;
+  width: 100%;
+  max-width: 1024px;
   margin: 0 auto;
 
   background-color: var(--black40);
@@ -21,9 +25,6 @@
   right:0;
   bottom: 0;
   left: 0;
-
-  width: 100%;
-  height: 100vh;
 }
 
 .borderBoxShadow {
@@ -44,6 +45,7 @@
 
 .modalBody {
   padding: 0 3rem;
+  padding-bottom: 1rem;
 }
 
 .modalBodyContent {
@@ -53,7 +55,7 @@
 }
 
 .col1 {
-  max-height: 40vh;
+  max-height: 30vh;
   
   overflow-y: scroll;
 }
@@ -108,18 +110,12 @@
   margin: 0px;
 }
 
-@media (max-width: 768px) {
-  .modal {
-    width: 100%;
-  }
-}
-
 .buttonsWrapper {
   position: absolute;
-  top: 35%;
-
+  top: 32%;
+   
   display: flex;
-
+  
   margin-bottom: 0.75rem /* 12px */;
   padding-left: 1rem /* 48px */;
 }

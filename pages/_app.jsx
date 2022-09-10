@@ -6,8 +6,8 @@ import '../styles/globals.css';
 import Loading from '../components/loading/Loading';
 
 const MyApp = ({ Component, pageProps }) => {
-  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const handleLoggedIn = async () => {
