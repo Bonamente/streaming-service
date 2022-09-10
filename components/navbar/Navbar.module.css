@@ -1,7 +1,7 @@
 .container {
   position: fixed;
   top: 0;
-  z-index: 50;
+  z-index: 100;
 
   width: 100%;
 
@@ -15,13 +15,24 @@
 
 .wrapper {
   display: flex;
-  
-  padding: 1.25rem /* 20px */;
+  flex-wrap: wrap;
+
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem;  
 }
 
 .navWrapper {
   display: flex;
   align-items: center;
+}
+
+.linkWrapper {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+  margin-bottom: 0.25rem;
 }
 
 .logoLink {
@@ -35,6 +46,40 @@
   color: var(--white10);
 }
 
+.link, 
+.navLink, 
+.usernameBtn {
+  outline: none;
+  transition: all 330ms ease-in-out;
+}
+
+.link:hover,
+.link:focus {
+  transform: scale(1.1);  
+}
+
+.navLink:hover,
+.navLink:focus,
+.usernameBtn:hover,
+.usernameBtn:focus {  
+  color: var(--red20);  
+}
+
+.activeNavLink {
+  color: var(--red20);
+  text-decoration: underline;
+}
+
+.activeNavLink:hover,
+.activeNavLink:focus {
+  color: var(--white30);
+} 
+
+.nonActiveNavLink {
+  color: var(--white10);
+  text-decoration: none;
+}
+
 .logoWrapper {
   width: 8rem /* 128px */;
 
@@ -44,13 +89,12 @@
 .navItems {
   display: flex;
   flex-direction: row;
+  align-self: center;
 
-  width: 50%;
-  margin-left: 1.5rem /* 24px */;
+  padding: 0;
 
   font-size: 1rem;
-  line-height: 1.25rem /* 20px */;
-
+  line-height: 1.25rem /* 20px;; */;
   list-style: none;
 }
 
@@ -60,7 +104,7 @@
   font-size: 1rem;
   font-weight: 600;
 
-  cursor: pointer;
+  cursor: pointer;  
 }
 
 .navItem2 {
@@ -78,7 +122,7 @@
   display: flex;
   align-items: center;
 
-  color: var(--white);
+  color: var(--white); 
 
   overflow: hidden;
 }
@@ -116,6 +160,7 @@
   line-height: 1.25rem /* 20px */;
 
   border-radius: 0.25rem /* 4px */;
+  outline: none;
 
   transition-property: background-color, border-color, color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -124,7 +169,8 @@
   cursor: pointer;
 }
 
-.authLink:hover {
+.authLink:hover,
+.authLink:focus {
   text-decoration: underline;
 }
 
@@ -142,12 +188,29 @@
     padding-right: 4rem /* 64px */;
   }
 
+  .linkWrapper {
+    display: flex;
+    justify-content: center;
+
+    width: auto;
+    margin-bottom: 0;
+
+  }  
+
   .logoLink {
-    margin-bottom: 0px;
+    margin-bottom: 0px;    
+  }
+
+  .logoLink:hover {
+    color: blue;
   }
 
   .navItems {
+    align-self: unset;  
+   
+    padding: unset;    
     margin-left: 3rem /* 48px */;
+  
   }
 
   .navItem {

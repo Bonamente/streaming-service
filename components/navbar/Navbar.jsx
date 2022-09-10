@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import cn from 'classnames';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -12,22 +14,26 @@ import magic from '../../lib/magic-client';
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [username, setUsername] = useState('');
-
+  const [didToken, setDidToken] = useState('');
   const router = useRouter();
+  const currentRoute = router.pathname;
 
   useEffect(() => {
-    async function getUsername() {
+    const applyUsernameInNav = async () => {
       try {
         const { email } = await magic.user.getMetadata();
+        const idToken = await magic.user.getIdToken();
+
         if (email) {
           setUsername(email);
+          setDidToken(idToken);
         }
       } catch (err) {
-        console.log('Error retrieving email:', err);
+        console.error('Error retrieving email', err);
       }
-    }
+    };
 
-    getUsername();
+    applyUsernameInNav();
   }, []);
 
   const handleShowDropdown = (e) => {
@@ -39,8 +45,15 @@ const Navbar = () => {
     e.preventDefault();
 
     try {
-      await magic.user.logout();
-      router.push('/login');
+      const response = await fetch('/api/logout', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${didToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      await response.json();
     } catch (err) {
       console.error('Error logging out', err);
       router.push('/login');
@@ -50,25 +63,49 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <Link className={styles.logoLink} href="/">
-          <a>
-            <div className={styles.logoWrapper}>
-              <Image
-                src="/static/logo.png"
-                width="140px"
-                height="40px"
-                alt="Logo"
-              />
-            </div>
-          </a>
-        </Link>
+        <div className={styles.linkWrapper}>
+          <Link className={styles.logoLink} href="/">
+            <a className={styles.link}>
+              <div className={styles.logoWrapper}>
+                <Image
+                  src="/static/logo.png"
+                  width="140px"
+                  height="40px"
+                  alt="Logo"
+                />
+              </div>
+            </a>
+          </Link>
+        </div>
 
         <ul className={styles.navItems}>
           <li className={styles.navItem}>
-            <Link href="/">Home</Link>
+            <Link href="/">
+              <a
+                className={cn(
+                  styles.navLink,
+                  currentRoute === '/'
+                    ? styles.activeNavLink
+                    : styles.nonActiveNavLink
+                )}
+              >
+                Home
+              </a>
+            </Link>
           </li>
           <li className={styles.navItem2}>
-            <Link href="/browse/my-list">My List</Link>
+            <Link href="/browse/my-list">
+              <a
+                className={cn(
+                  styles.navLink,
+                  currentRoute === '/browse/my-list'
+                    ? styles.activeNavLink
+                    : styles.nonActiveNavLink
+                )}
+              >
+                My List
+              </a>
+            </Link>
           </li>
         </ul>
 
@@ -91,7 +128,11 @@ const Navbar = () => {
             {showDropdown && (
               <div className={styles.authDropdown}>
                 <div>
-                  <a className={styles.authLink} onClick={handleSignout}>
+                  <a
+                    className={styles.authLink}
+                    onClick={handleSignout}
+                    tabIndex={0}
+                  >
                     Sign out
                   </a>
 
