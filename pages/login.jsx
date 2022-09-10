@@ -16,7 +16,6 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [userMessage, setUserMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -39,41 +38,41 @@ const Login = () => {
   };
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    if (e.key === 'Enter' || e.type === 'click') {
+      if (emailValidationRegExp.test(email)) {
+        try {
+          setIsLoading(true);
 
-    if (emailValidationRegExp.test(email)) {
-      try {
-        setIsLoading(true);
-
-        const didToken = await magic.auth.loginWithMagicLink({
-          email,
-        });
-
-        if (didToken) {
-          const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${didToken}`,
-              'Content-Type': 'application/json',
-            },
+          const didToken = await magic.auth.loginWithMagicLink({
+            email,
           });
 
-          const loggedInResponse = await response.json();
+          if (didToken) {
+            const response = await fetch('/api/login', {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${didToken}`,
+                'Content-Type': 'application/json',
+              },
+            });
 
-          if (loggedInResponse.done) {
-            router.push('/');
-          } else {
-            setIsLoading(false);
-            setUserMessage('Something went wrong logging in');
+            const loggedInResponse = await response.json();
+
+            if (loggedInResponse.done) {
+              router.push('/');
+            } else {
+              setIsLoading(false);
+              setUserMessage('Something went wrong logging in');
+            }
           }
+        } catch (err) {
+          console.error('Something went wrong logging in', err);
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error('Something went wrong logging in', error);
+      } else {
         setIsLoading(false);
+        setUserMessage('Enter a valid email address');
       }
-    } else {
-      setIsLoading(false);
-      setUserMessage('Enter a valid email address');
     }
   };
 
@@ -108,6 +107,7 @@ const Login = () => {
             className={styles.emailInput}
             placeholder="Email address"
             onChange={handleOnEmailInput}
+            onKeyPress={handleLogin}
             type="text"
           />
           <p className={styles.userMessage}>{userMessage}</p>
