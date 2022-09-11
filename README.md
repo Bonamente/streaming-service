@@ -14,3 +14,4 @@ A streaming service with passwordless authentication, a favorite videos page, an
 - **classnames**
 
 ### Deploy
+https://paradiso.vercel.app/
