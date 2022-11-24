@@ -38,6 +38,8 @@ const Login = () => {
   };
 
   const handleLogin = async (e) => {
+    e.preventDefault();
+
     if (e.key === 'Enter' || e.type === 'click') {
       if (emailValidationRegExp.test(email)) {
         try {
@@ -116,6 +118,7 @@ const Login = () => {
             className={styles.loginBtn}
             onClick={handleLogin}
             type="submit"
+            disabled={isLoading}
           >
             {isLoading ? 'Loading...' : 'Sign In'}
           </button>
