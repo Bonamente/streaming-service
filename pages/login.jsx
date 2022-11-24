@@ -1,11 +1,8 @@
-/* eslint-disable consistent-return */
 /* eslint-disable no-useless-escape */
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
-
-import Loading from '../components/loading/Loading';
 
 import styles from '../styles/Login.module.css';
 import magic from '../lib/magic-client';
@@ -62,14 +59,13 @@ const Login = () => {
             const loggedInResponse = await response.json();
 
             if (loggedInResponse.done) {
-              router.push('/');
-
+              // router.push('/');
               // because router.push() redirects but doesn't render page (Consider refactor later)
-              return <Loading />;
+              window.location.href = '/';
+            } else {
+              setIsLoading(false);
+              setUserMessage('Something went wrong logging in');
             }
-
-            setIsLoading(false);
-            setUserMessage('Something went wrong logging in');
           }
         } catch (err) {
           console.error('Something went wrong logging in', err);
