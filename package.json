@@ -12,6 +12,7 @@
     "@magic-sdk/admin": "^1.4.1",
     "classnames": "^2.3.1",
     "cookie": "^0.5.0",
+    "dayjs": "^1.11.6",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "framer-motion": "^7.2.1",
