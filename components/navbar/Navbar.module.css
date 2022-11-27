@@ -158,6 +158,7 @@
 
   font-size: 1rem /* 16px */;
   line-height: 1.25rem /* 20px */;
+  color: var(--white);
 
   border-radius: 0.25rem /* 4px */;
   outline: none;

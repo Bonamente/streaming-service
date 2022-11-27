@@ -8,6 +8,7 @@ import cn from 'classnames';
 import Link from 'next/link';
 import Image from 'next/image';
 
+import useOutsideClick from '../../hooks/useOutsideClick';
 import styles from './Navbar.module.css';
 import magic from '../../lib/magic-client';
 
@@ -36,14 +37,13 @@ const Navbar = () => {
     applyUsernameInNav();
   }, []);
 
-  const handleShowDropdown = (e) => {
-    e.preventDefault();
+  const handleShowDropdown = () => {
     setShowDropdown(!showDropdown);
   };
 
-  const handleSignout = async (e) => {
-    e.preventDefault();
+  const ref = useOutsideClick(showDropdown, handleShowDropdown);
 
+  const handleSignout = async () => {
     try {
       const response = await fetch('/api/logout', {
         method: 'POST',
@@ -115,6 +115,7 @@ const Navbar = () => {
               className={styles.usernameBtn}
               onClick={handleShowDropdown}
               type="button"
+              ref={ref}
             >
               <p className={styles.username}>{username}</p>
               <Image
@@ -128,13 +129,13 @@ const Navbar = () => {
             {showDropdown && (
               <div className={styles.authDropdown}>
                 <div>
-                  <a
+                  <button
                     className={styles.authLink}
                     onClick={handleSignout}
-                    tabIndex={0}
+                    type="button"
                   >
                     Sign out
-                  </a>
+                  </button>
 
                   <div className={styles.lineWrapper} />
                 </div>
